@@ -6,7 +6,7 @@ using MediaBrowser.Model.Services;
 
 namespace Emby.Notification.Ntfy.Api
 {
-    [Route("/Notification/Ntfy/Test", "POST", Summary = "Test Ntfy Notification")]
+    [Route("/Notifications/Ntfy/Test", "POST", Summary = "Test Ntfy Notification")]
     public class TestNotificationRequest : IReturnVoid
     {
     }
