@@ -66,7 +66,7 @@
         }
 
         function sendTestNotification() {
-            const testEndpoint = ApiClient.getUrl('Notification/Ntfy/Test');
+            const testEndpoint = ApiClient.getUrl('Notifications/Ntfy/Test');
             fetch(testEndpoint, {method: 'POST', headers: {'X-Emby-Token': ApiClient.serverInfo().AccessToken}});
         }
     </script>
