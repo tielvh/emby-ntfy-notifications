@@ -8,15 +8,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="mediabrowser.server.core" Version="4.7.9"/>
+        <PackageReference Include="mediabrowser.server.core" Version="4.8.0.38-beta"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Configuration/config.html"/>
+        <None Remove="Configuration/entryeditor.template.html"/>
+        <None Remove="Configuration/entryeditor.js"/>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Configuration/config.html"/>
+        <EmbeddedResource Include="Configuration/entryeditor.template.html"/>
+        <EmbeddedResource Include="Configuration/entryeditor.js"/>
     </ItemGroup>
 
 </Project>

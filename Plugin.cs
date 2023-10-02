@@ -1,37 +1,38 @@
 using System;
 using System.Collections.Generic;
-using Emby.Notification.Ntfy.Configuration;
-using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
 using MediaBrowser.Model.Plugins;
-using MediaBrowser.Model.Serialization;
 
 namespace Emby.Notification.Ntfy
 {
-    public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
+    public class Plugin : BasePlugin, IHasWebPages
     {
-        public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer) : base(applicationPaths,
-            xmlSerializer)
-        {
-            Instance = this;
-        }
-
-        public override string Name => "Ntfy Notifications";
+        public const string StaticName = "Ntfy";
+        
+        public override string Name => $"{StaticName} Notifications";
 
         public override Guid Id => new("0ecaedaf-b310-4fc5-95be-367216652f70");
 
-        public static Plugin Instance { get; private set; }
+        private const string EditorJsName = "ntfynotificationeditorjs";
 
         public IEnumerable<PluginPageInfo> GetPages()
         {
-            yield return new PluginPageInfo
+            return new[]
             {
-                Name = Name,
-                EmbeddedResourcePath = GetType().Namespace + ".Configuration.config.html",
-                EnableInMainMenu = true,
-                MenuSection = "server",
-                MenuIcon = "chat"
+                new PluginPageInfo
+                {
+                    Name = "ntfynotificationtemplate",
+                    EmbeddedResourcePath = GetType().Namespace + ".Configuration.entryeditor.template.html",
+                    IsMainConfigPage = false
+                },
+                new PluginPageInfo
+                {
+                    Name = EditorJsName,
+                    EmbeddedResourcePath = GetType().Namespace + ".Configuration.entryeditor.js"
+                }
             };
         }
+        
+        public string NotificationSetupModuleUrl => GetPluginPageUrl(EditorJsName);
     }
 }
