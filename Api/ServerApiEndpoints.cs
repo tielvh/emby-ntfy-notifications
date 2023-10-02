@@ -35,7 +35,7 @@ namespace Emby.Notification.Ntfy.Api
                 {
                     { "Authorization", $"Bearer {configuration.AccessToken}" },
                     { "X-Title", "Emby notification test" },
-                    { "X-Icon", "https://emby.media/favicon-32x32.png" }
+                    { "X-Icon", "https://emby.media/community/uploads/inline/44692/560bd1408fc27_MB3_512_423.png" }
                 },
                 RequestHttpContent =
                     new StringContent("If you see this message, it means your Emby ntfy notification setup is working")
