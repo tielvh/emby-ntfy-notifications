@@ -1,4 +1,6 @@
+using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MediaBrowser.Common.Net;
@@ -24,13 +26,17 @@ namespace Emby.Notification.Ntfy
             var configuration = Plugin.Instance.Configuration;
             var ntfyEndpoint = $"{configuration.Url}/{configuration.Topic}";
 
+            var titleBytes = Encoding.UTF8.GetBytes(request.Name);
+            var b64Title = Convert.ToBase64String(titleBytes);
+            var encodedTitle = $"=?UTF-8?B?{b64Title}?=";
+
             var httpRequestOptions = new HttpRequestOptions
             {
                 Url = ntfyEndpoint,
                 RequestHeaders =
                 {
                     { "Authorization", $"Bearer {configuration.AccessToken}" },
-                    { "X-Title", request.Name },
+                    { "X-Title", encodedTitle },
                     { "X-Icon", "https://emby.media/community/uploads/inline/44692/560bd1408fc27_MB3_512_423.png" }
                 },
                 RequestHttpContent = new StringContent(request.Description ?? string.Empty),
