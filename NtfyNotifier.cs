@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Emby.Notifications;
@@ -37,13 +39,17 @@ namespace Emby.Notification.Ntfy
             var accessToken = options["Token"];
             var ntfyEndpoint = $"{url}/{topic}";
 
+            var titleBytes = Encoding.UTF8.GetBytes(request.Title);
+            var b64Title = Convert.ToBase64String(titleBytes);
+            var encodedTitle = $"=?UTF-8?B?{b64Title}?=";
+
             var httpRequestOptions = new HttpRequestOptions
             {
                 Url = ntfyEndpoint,
                 RequestHeaders =
                 {
                     { "Authorization", $"Bearer {accessToken}" },
-                    { "X-Title", request.Title },
+                    { "X-Title", encodedTitle },
                     {
                         "X-Icon",
                         "https://raw.githubusercontent.com/MediaBrowser/Emby.Resources/16cf411dddf34000a64ee10a41bffd87b45f8d18/images/Logos/logoicon114.png"
