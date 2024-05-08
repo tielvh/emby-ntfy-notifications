@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MediaBrowser.Common.Plugins;
 using MediaBrowser.Model.Plugins;
 
-namespace Emby.Notification.Ntfy
+namespace Tielvh.Emby.Notification.Ntfy
 {
     public class Plugin : BasePlugin, IHasWebPages
     {

@@ -9,7 +9,7 @@ using MediaBrowser.Common.Net;
 using MediaBrowser.Controller;
 using MediaBrowser.Model.Logging;
 
-namespace Emby.Notification.Ntfy
+namespace Tielvh.Emby.Notification.Ntfy.Application
 {
     public class NtfyNotifier : IUserNotifier
     {
