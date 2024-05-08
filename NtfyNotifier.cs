@@ -35,6 +35,7 @@ namespace Emby.Notification.Ntfy
         {
             var options = request.Configuration.Options;
             var url = options["Url"];
+            if (url == string.Empty) url = "https://ntfy.sh";
             var topic = options["Topic"];
             var accessToken = options["Token"];
             var ntfyEndpoint = $"{url}/{topic}";
