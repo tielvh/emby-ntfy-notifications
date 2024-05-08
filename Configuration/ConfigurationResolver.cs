@@ -7,7 +7,7 @@ namespace Tielvh.Emby.Notification.Ntfy.Configuration
     {
         private readonly string _url;
         private const string DefaultNtfyInstanceUrl = "https://ntfy.sh";
-        public string Url => _url == String.Empty ? DefaultNtfyInstanceUrl : _url;
+        public string Url => _url == string.Empty ? DefaultNtfyInstanceUrl : _url;
         public string NtfyEndpoint => string.Concat(Url.TrimEnd('/'), Topic);
         
         private readonly string _accessToken;

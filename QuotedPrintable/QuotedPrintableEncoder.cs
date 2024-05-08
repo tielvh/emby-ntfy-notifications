@@ -13,10 +13,10 @@ namespace Tielvh.Emby.Notification.Ntfy.QuotedPrintable
             var sb = new StringBuilder();
 
             sb.Append("=?");
-            sb.Append(Charset.ToString());
+            sb.Append(Charset.Value);
 
             sb.Append("?");
-            sb.Append(Encoding.Name);
+            sb.Append(Encoding.Value);
 
             sb.Append("?");
             var encodedValue = EncodeValue(value);

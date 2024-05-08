@@ -53,11 +53,11 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
                 RequestHttpContent = new StringContent(request.Description ?? string.Empty),
                 CancellationToken = cancellationToken
             };
-            _logger.Debug("Ntfy notification to {0} - {1} - {2}", configResolver.Url, request.Title,
+            _logger.Info("Ntfy notification to {configResolver.Url} - {request.Title} - {request.Description}", configResolver.Url, request.Title,
                 request.Description);
 
             using var httpResponse = await _httpClient.Post(httpRequestOptions);
-            _logger.Debug("Response status code {0}", httpResponse.StatusCode.ToString());
+            _logger.Info("Response status code {httpResponse.StatusCode.ToString()}", httpResponse.StatusCode.ToString());
         }
     }
 }

@@ -16,11 +16,17 @@
     <ItemGroup>
         <None Remove="Configuration/entryeditor.template.html"/>
         <None Remove="Configuration/entryeditor.js"/>
+        <None Remove="Tielvh.Emby.Notification.Ntfy.Test\**" />
     </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Include="Configuration/entryeditor.template.html"/>
         <EmbeddedResource Include="Configuration/entryeditor.js"/>
+        <EmbeddedResource Remove="Tielvh.Emby.Notification.Ntfy.Test\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Tielvh.Emby.Notification.Ntfy.Test\**" />
     </ItemGroup>
 
 </Project>
