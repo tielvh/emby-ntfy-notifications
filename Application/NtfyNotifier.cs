@@ -1,13 +1,13 @@
-using System;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Emby.Notifications;
 using MediaBrowser.Common.Net;
 using MediaBrowser.Controller;
 using MediaBrowser.Model.Logging;
+using Tielvh.Emby.Notification.Ntfy.Configuration;
+using Tielvh.Emby.Notification.Ntfy.QuotedPrintable;
 
 namespace Tielvh.Emby.Notification.Ntfy.Application
 {
@@ -33,23 +33,17 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
 
         public async Task SendNotification(InternalNotificationRequest request, CancellationToken cancellationToken)
         {
-            var options = request.Configuration.Options;
-            var url = options["Url"];
-            if (url == string.Empty) url = "https://ntfy.sh";
-            var topic = options["Topic"];
-            var accessToken = options["Token"];
-            var ntfyEndpoint = $"{url}/{topic}";
-
-            var titleBytes = Encoding.UTF8.GetBytes(request.Title);
-            var b64Title = Convert.ToBase64String(titleBytes);
-            var encodedTitle = $"=?UTF-8?B?{b64Title}?=";
+            var configResolver = new ConfigurationResolver(request.Configuration.Options);
+            
+            var quotedPrintableEncoder = new QuotedPrintableEncoder();
+            var encodedTitle = quotedPrintableEncoder.Encode(request.Title);
 
             var httpRequestOptions = new HttpRequestOptions
             {
-                Url = ntfyEndpoint,
+                Url = configResolver.NtfyEndpoint,
                 RequestHeaders =
                 {
-                    { "Authorization", $"Bearer {accessToken}" },
+                    { "Authorization", $"Bearer {configResolver.AccessToken}" },
                     { "X-Title", encodedTitle },
                     {
                         "X-Icon",
@@ -59,7 +53,7 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
                 RequestHttpContent = new StringContent(request.Description ?? string.Empty),
                 CancellationToken = cancellationToken
             };
-            _logger.Debug("Ntfy notification to {0} - {1} - {2}", url, request.Title,
+            _logger.Debug("Ntfy notification to {0} - {1} - {2}", configResolver.Url, request.Title,
                 request.Description);
 
             using var httpResponse = await _httpClient.Post(httpRequestOptions);

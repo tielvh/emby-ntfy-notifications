@@ -5,9 +5,11 @@
         <AssemblyVersion>1.1.0.1</AssemblyVersion>
         <FileVersion>1.1.0.1</FileVersion>
         <LangVersion>9</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
         <PackageReference Include="mediabrowser.server.core" Version="4.8.0.38-beta"/>
     </ItemGroup>
 
