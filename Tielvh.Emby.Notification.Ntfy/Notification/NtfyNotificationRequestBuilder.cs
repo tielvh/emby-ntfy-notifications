@@ -7,7 +7,6 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
 {
     public class NtfyNotificationRequestBuilder
     {
-        private const string AuthorizationType = "Bearer";
         private readonly NtfyNotificationRequest _notificationRequest = new();
 
         public NtfyNotificationRequestBuilder WithTitle(string title)
@@ -32,7 +31,7 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
         public NtfyNotificationRequestBuilder WithAccessToken(string? accessToken)
         {
             if (accessToken is not null)
-                _notificationRequest.AuthorizationHeader = string.Concat(AuthorizationType, ' ', accessToken);
+                _notificationRequest.AuthorizationHeader = string.Concat("Bearer", ' ', accessToken);
             return this;
         }
 

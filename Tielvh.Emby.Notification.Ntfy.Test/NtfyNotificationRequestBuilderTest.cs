@@ -69,4 +69,52 @@ public class NtfyNotificationRequestBuilderTest
 
         Assert.Throws<InvalidOperationException>(() => builder.Build());
     }
+
+    [Test]
+    public void GivenTitle_WhenBuilding_TitleIsQPEncoded()
+    {
+        var builder = new NtfyNotificationRequestBuilder()
+            .WithTitle(Title)
+            .WithInstance(Instance)
+            .WithTopic(Topic);
+
+        var request = builder.Build();
+
+        StringAssert.IsMatch(@"^=\?[ -~]+\?[ -~]+\?[ -~]+\?=$", request.Title);
+    }
+
+    [Test]
+    public void GivenAccessToken_WhenBuilding_AuthorizationHeaderIsSet()
+    {
+        const string accessToken = "abc123";
+        var builder = new NtfyNotificationRequestBuilder()
+            .WithTitle(Title)
+            .WithInstance(Instance)
+            .WithTopic(Topic)
+            .WithAccessToken(accessToken);
+
+        var request = builder.Build();
+        Assert.Multiple(() =>
+        {
+            Assert.That(request.AuthorizationHeader, Is.Not.Null);
+            Assert.That(() => request.AuthorizationHeader, Is.EqualTo($"Bearer {accessToken}"));
+        });
+    }
+
+    [Test]
+    public void GivenInstanceAndTopic_WhenBuilding_EndpointIsSet()
+    {
+        var builder = new NtfyNotificationRequestBuilder()
+            .WithTitle(Title)
+            .WithInstance(Instance)
+            .WithTopic(Topic);
+
+        var request = builder.Build();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request.Endpoint, Is.Not.Null);
+            Assert.That(() => request.Endpoint, Is.EqualTo($"{Instance}/{Topic}"));
+        });
+    }
 }
