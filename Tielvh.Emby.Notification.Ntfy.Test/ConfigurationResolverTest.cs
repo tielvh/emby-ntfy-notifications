@@ -38,4 +38,20 @@ public class ConfigurationResolverTest
 
         StringAssert.Contains("https://ntfy.sh", endpoint);
     }
+
+    [Test]
+    public void GivenTopicOptions_WhenResolvingEndpoint_TopicIsUsed()
+    {
+        var options = new Dictionary<string, string>
+        {
+            { "Url", "" },
+            { "Token", "" },
+            { "Topic", "notifications" }
+        };
+        var configurationResolver = new ConfigurationResolver(options);
+
+        var endpoint = configurationResolver.NtfyEndpoint;
+
+        StringAssert.Contains("/notifications", endpoint);
+    }
 }
