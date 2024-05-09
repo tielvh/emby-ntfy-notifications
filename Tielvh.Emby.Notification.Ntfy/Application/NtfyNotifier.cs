@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Emby.Notifications;
@@ -7,7 +6,7 @@ using MediaBrowser.Common.Net;
 using MediaBrowser.Controller;
 using MediaBrowser.Model.Logging;
 using Tielvh.Emby.Notification.Ntfy.Configuration;
-using Tielvh.Emby.Notification.Ntfy.QuotedPrintable;
+using Tielvh.Emby.Notification.Ntfy.Notification;
 
 namespace Tielvh.Emby.Notification.Ntfy.Application
 {
@@ -35,27 +34,17 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
         {
             var configResolver = new ConfigurationResolver(request.Configuration.Options);
 
-            var quotedPrintableEncoder = new QuotedPrintableEncoder();
-            var encodedTitle = quotedPrintableEncoder.Encode(request.Title);
+            var ntfyRequest = new NtfyNotificationRequestBuilder()
+                .WithTitle(request.Title)
+                .WithDescription(request.Description)
+                .WithEndpoint(configResolver.NtfyEndpoint)
+                .WithAccessToken(configResolver.AccessToken)
+                .WithCancellationToken(cancellationToken)
+                .Build();
 
-            var httpRequestOptions = new HttpRequestOptions
-            {
-                Url = configResolver.NtfyEndpoint,
-                RequestHeaders =
-                {
-                    { "Authorization", $"Bearer {configResolver.AccessToken}" },
-                    { "X-Title", encodedTitle },
-                    {
-                        "X-Icon",
-                        "https://raw.githubusercontent.com/MediaBrowser/Emby.Resources/16cf411dddf34000a64ee10a41bffd87b45f8d18/images/Logos/logoicon114.png"
-                    }
-                },
-                RequestHttpContent = new StringContent(request.Description ?? string.Empty),
-                CancellationToken = cancellationToken
-            };
-            _logger.Info("Ntfy notification to {url} - {title} - {description}", configResolver.Url, request.Title, request.Description);
-
-            using var httpResponse = await _httpClient.Post(httpRequestOptions);
+            _logger.Info("Ntfy notification to {url} - {title} - {description}", configResolver.Url, request.Title,
+                request.Description);
+            using var httpResponse = await _httpClient.Post(ntfyRequest.ToHttpRequestOptions());
             _logger.Info("Response status code {statusCode}", httpResponse.StatusCode.ToString());
         }
     }
