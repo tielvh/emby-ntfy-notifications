@@ -16,13 +16,13 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
             return this;
         }
 
-        public NtfyNotificationRequestBuilder WithDescription(string description)
+        public NtfyNotificationRequestBuilder WithDescription(string? description)
         {
             _notificationRequest.Description = description;
             return this;
         }
 
-        public NtfyNotificationRequestBuilder WithUrl(string url)
+        public NtfyNotificationRequestBuilder WithUrl(string? url)
         {
             _notificationRequest.Url = url;
             return this;
