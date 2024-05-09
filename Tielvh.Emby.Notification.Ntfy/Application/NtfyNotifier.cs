@@ -34,7 +34,7 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
         public async Task SendNotification(InternalNotificationRequest request, CancellationToken cancellationToken)
         {
             var configResolver = new ConfigurationResolver(request.Configuration.Options);
-            
+
             var quotedPrintableEncoder = new QuotedPrintableEncoder();
             var encodedTitle = quotedPrintableEncoder.Encode(request.Title);
 
@@ -53,11 +53,10 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
                 RequestHttpContent = new StringContent(request.Description ?? string.Empty),
                 CancellationToken = cancellationToken
             };
-            _logger.Info("Ntfy notification to {configResolver.Url} - {request.Title} - {request.Description}", configResolver.Url, request.Title,
-                request.Description);
+            _logger.Info($"Ntfy notification to {configResolver.Url} - {request.Title} - {request.Description}");
 
             using var httpResponse = await _httpClient.Post(httpRequestOptions);
-            _logger.Info("Response status code {httpResponse.StatusCode.ToString()}", httpResponse.StatusCode.ToString());
+            _logger.Info($"Response status code {httpResponse.StatusCode.ToString()}");
         }
     }
 }
