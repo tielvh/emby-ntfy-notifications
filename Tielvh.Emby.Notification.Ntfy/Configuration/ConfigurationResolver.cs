@@ -5,14 +5,13 @@ namespace Tielvh.Emby.Notification.Ntfy.Configuration
     public class ConfigurationResolver
     {
         private readonly string _url;
-        private const string DefaultNtfyInstanceUrl = "https://ntfy.sh";
+        public const string DefaultNtfyInstanceUrl = "https://ntfy.sh";
         public string Url => _url == string.Empty ? DefaultNtfyInstanceUrl : _url;
-        public string NtfyEndpoint => string.Concat(Url.TrimEnd('/'), '/', Topic);
 
         private readonly string _accessToken;
         public string? AccessToken => _accessToken == string.Empty ? null : _accessToken;
 
-        private string Topic { get; }
+        public readonly string Topic;
 
         public ConfigurationResolver(IDictionary<string, string> options)
         {

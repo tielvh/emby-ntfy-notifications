@@ -6,12 +6,16 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
 {
     public class NtfyNotificationRequest
     {
-        internal string? Title;
-        internal string? Description;
-        internal string? Url;
-        internal string? AuthorizationHeader;
-        internal string? Endpoint;
-        internal CancellationToken? CancellationToken;
+        internal NtfyNotificationRequest()
+        {
+        }
+
+        public string? Title { get; internal set; }
+        public string? Description { get; internal set; }
+        public string? Url { get; internal set; }
+        public string? AuthorizationHeader { get; internal set; }
+        public string? Endpoint { get; internal set; }
+        public CancellationToken? CancellationToken { get; internal set; }
 
         private const string IconUrl =
             "https://raw.githubusercontent.com/MediaBrowser/Emby.Resources/16cf411dddf34000a64ee10a41bffd87b45f8d18/images/Logos/logoicon114.png";

@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Tielvh.Emby.Notification.Ntfy.Configuration;
 using Tielvh.Emby.Notification.Ntfy.QuotedPrintable;
 
 namespace Tielvh.Emby.Notification.Ntfy.Notification
@@ -35,10 +36,20 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
             return this;
         }
 
-        public NtfyNotificationRequestBuilder WithEndpoint(string endpoint)
+        private string? _instance;
+
+        public NtfyNotificationRequestBuilder WithInstance(string instance)
         {
-            _ = new Uri(endpoint);
-            _notificationRequest.Endpoint = endpoint;
+            _ = new Uri(instance);
+            _instance = instance;
+            return this;
+        }
+
+        private string? _topic;
+
+        public NtfyNotificationRequestBuilder WithTopic(string topic)
+        {
+            _topic = topic;
             return this;
         }
 
@@ -50,14 +61,21 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
 
         private void Validate()
         {
+            if (_instance is null) throw new InvalidOperationException("Instance is not set");
+            if (_topic is null) throw new InvalidOperationException("Topic is not set");
+            if (_instance == ConfigurationResolver.DefaultNtfyInstanceUrl &&
+                _notificationRequest.AuthorizationHeader is not null)
+                throw new InvalidOperationException("Access token may not be set when using the default ntfy instance");
             if (_notificationRequest.Title is null) throw new InvalidOperationException("Title is not set");
-            if (_notificationRequest.Endpoint is null) throw new InvalidOperationException("Endpoint is not set");
         }
 
         public NtfyNotificationRequest Build()
         {
             Validate();
+            _notificationRequest.Endpoint = FormattedEndpoint;
             return _notificationRequest;
         }
+
+        private string FormattedEndpoint => string.Concat(_instance!.TrimEnd('/'), '/', _topic);
     }
 }

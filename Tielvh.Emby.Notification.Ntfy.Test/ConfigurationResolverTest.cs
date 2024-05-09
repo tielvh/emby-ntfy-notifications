@@ -8,7 +8,7 @@ public class ConfigurationResolverTest
     private static readonly RandomStringGenerator RandomStringGenerator = new();
 
     [Test]
-    public void GivenFullOptions_WhenResolvingEndpoint_OptionsUrlIsUsed()
+    public void GivenFullOptions_WhenResolvingUrl_OptionsUrlIsUsed()
     {
         var options = new Dictionary<string, string>
         {
@@ -18,13 +18,13 @@ public class ConfigurationResolverTest
         };
         var configurationResolver = new ConfigurationResolver(options);
 
-        var endpoint = configurationResolver.NtfyEndpoint;
+        var url = configurationResolver.Url;
 
-        StringAssert.Contains("https://foo.bar", endpoint);
+        StringAssert.Contains("https://foo.bar", url);
     }
 
     [Test]
-    public void GivenMinimalOptions_WhenResolvingEndpoint_DefaultUrlIsUsed()
+    public void GivenMinimalOptions_WhenResolvingUrl_DefaultUrlIsUsed()
     {
         var options = new Dictionary<string, string>
         {
@@ -34,24 +34,8 @@ public class ConfigurationResolverTest
         };
         var configurationResolver = new ConfigurationResolver(options);
 
-        var endpoint = configurationResolver.NtfyEndpoint;
+        var endpoint = configurationResolver.Url;
 
-        StringAssert.Contains("https://ntfy.sh", endpoint);
-    }
-
-    [Test]
-    public void GivenTopicOptions_WhenResolvingEndpoint_TopicIsUsed()
-    {
-        var options = new Dictionary<string, string>
-        {
-            { "Url", "" },
-            { "Token", "" },
-            { "Topic", "notifications" }
-        };
-        var configurationResolver = new ConfigurationResolver(options);
-
-        var endpoint = configurationResolver.NtfyEndpoint;
-
-        StringAssert.Contains("/notifications", endpoint);
+        StringAssert.Contains(ConfigurationResolver.DefaultNtfyInstanceUrl, endpoint);
     }
 }

@@ -37,7 +37,8 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
             var ntfyRequest = new NtfyNotificationRequestBuilder()
                 .WithTitle(request.Title)
                 .WithDescription(request.Description)
-                .WithEndpoint(configResolver.NtfyEndpoint)
+                .WithInstance(configResolver.Url)
+                .WithTopic(configResolver.Topic)
                 .WithAccessToken(configResolver.AccessToken)
                 .WithCancellationToken(cancellationToken)
                 .Build();

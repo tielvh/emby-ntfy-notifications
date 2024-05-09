@@ -5,14 +5,16 @@ namespace Tielvh.Emby.Notification.Ntfy.Test;
 public class NtfyNotificationRequestTest
 {
     private const string Title = "foo";
-    private const string Endpoint = "https://tielvh.uno/bar";
+    private const string Instance = "https://tielvh.uno";
+    private const string Topic = "bar";
     
     [Test]
     public async Task GivenDescriptionNull_WhenConvertingToHttpRequestOptions_ContentIsEmptyString()
     {
         var request = new NtfyNotificationRequestBuilder()
             .WithTitle(Title)
-            .WithEndpoint(Endpoint)
+            .WithInstance(Instance)
+            .WithTopic(Topic)
             .WithDescription(null)
             .Build();
 
@@ -27,7 +29,8 @@ public class NtfyNotificationRequestTest
         const string description = "Lorem ipsum";
         var request = new NtfyNotificationRequestBuilder()
             .WithTitle(Title)
-            .WithEndpoint(Endpoint)
+            .WithInstance(Instance)
+            .WithTopic(Topic)
             .WithDescription(description)
             .Build();
 
@@ -41,7 +44,8 @@ public class NtfyNotificationRequestTest
     {
         var request = new NtfyNotificationRequestBuilder()
             .WithTitle(Title)
-            .WithEndpoint(Endpoint)
+            .WithInstance(Instance)
+            .WithTopic(Topic)
             .WithAccessToken(null)
             .Build();
 
@@ -56,7 +60,8 @@ public class NtfyNotificationRequestTest
         const string accessToken = "very secret access token :)";
         var request = new NtfyNotificationRequestBuilder()
             .WithTitle(Title)
-            .WithEndpoint(Endpoint)
+            .WithInstance(Instance)
+            .WithTopic(Topic)
             .WithAccessToken(accessToken)
             .Build();
 
@@ -70,7 +75,8 @@ public class NtfyNotificationRequestTest
     {
         var request = new NtfyNotificationRequestBuilder()
             .WithTitle(Title)
-            .WithEndpoint(Endpoint)
+            .WithInstance(Instance)
+            .WithTopic(Topic)
             .WithUrl(null)
             .Build();
 
@@ -85,7 +91,8 @@ public class NtfyNotificationRequestTest
         const string url = "https://tielvh.uno";
         var request = new NtfyNotificationRequestBuilder()
             .WithTitle(Title)
-            .WithEndpoint(Endpoint)
+            .WithInstance(Instance)
+            .WithTopic(Topic)
             .WithUrl(url)
             .Build();
 
