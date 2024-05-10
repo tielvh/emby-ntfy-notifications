@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using Emby.Notifications;
 using MediaBrowser.Common.Net;
 using MediaBrowser.Controller;
+using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Logging;
+using MediaBrowser.Model.Serialization;
 using Tielvh.Emby.Notification.Ntfy.Configuration;
 using Tielvh.Emby.Notification.Ntfy.Notification;
 
@@ -16,7 +18,7 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
         private readonly IHttpClient _httpClient;
         private readonly IServerApplicationHost _appHost;
 
-        public NtfyNotifier(ILogger logger, IHttpClient httpClient, IServerApplicationHost appHost)
+        public NtfyNotifier(ILogger logger, IHttpClient httpClient, IServerApplicationHost appHost, IJsonSerializer jsonSerializer)
         {
             _logger = logger;
             _httpClient = httpClient;
@@ -34,9 +36,14 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
         {
             var configResolver = new ConfigurationResolver(request.Configuration.Options);
 
+            var logo = request.Item?.Id is not null
+                ? new Image(configResolver.HostUrl, ImageType.Logo, request.Item.Id)
+                : null;
+
             var ntfyRequest = new NtfyNotificationRequestBuilder()
                 .WithTitle(request.Title)
                 .WithDescription(request.Description)
+                .WithIcon(logo)
                 .WithInstance(configResolver.Url)
                 .WithTopic(configResolver.Topic)
                 .WithAccessToken(configResolver.AccessToken)

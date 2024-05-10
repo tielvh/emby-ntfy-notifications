@@ -30,8 +30,8 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
 
         public NtfyNotificationRequestBuilder WithAccessToken(string? accessToken)
         {
-            if (accessToken is not null)
-                _notificationRequest.AuthorizationHeader = string.Concat("Bearer", ' ', accessToken);
+            _notificationRequest.AuthorizationHeader =
+                accessToken is not null ? string.Concat("Bearer", ' ', accessToken) : null;
             return this;
         }
 
@@ -55,6 +55,12 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
         public NtfyNotificationRequestBuilder WithCancellationToken(CancellationToken cancellationToken)
         {
             _notificationRequest.CancellationToken = cancellationToken;
+            return this;
+        }
+
+        public NtfyNotificationRequestBuilder WithIcon(Image? icon)
+        {
+            _notificationRequest.IconUrl = icon?.StaticUrl;
             return this;
         }
 

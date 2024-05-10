@@ -10,17 +10,18 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
         {
         }
 
-        public string? Title { get; internal set; }
+        public string Title { get; internal set; } = null!;
         public string? Description { get; internal set; }
         public string? Url { get; internal set; }
         public string? AuthorizationHeader { get; internal set; }
-        public string? Endpoint { get; internal set; }
+        public string Endpoint { get; internal set; } = null!;
         public CancellationToken? CancellationToken { get; internal set; }
+        public string? IconUrl { get; internal set; }
 
-        private const string IconUrl =
+        private const string DefaultIconUrl =
             "https://raw.githubusercontent.com/MediaBrowser/Emby.Resources/16cf411dddf34000a64ee10a41bffd87b45f8d18/images/Logos/logoicon114.png";
 
-        private string TagsHeader => string.Concat("view, View, ", Url);
+        private string? TagsHeader => Url is not null ? string.Concat("view, View, ", Url) : null;
 
         public HttpRequestOptions ToHttpRequestOptions()
         {
@@ -29,10 +30,10 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
                 Url = Endpoint,
                 RequestHttpContent = new StringContent(Description ?? string.Empty),
                 CancellationToken = CancellationToken ?? default,
-                RequestHeaders = { { "X-Icon", IconUrl }, { "X-Title", Title } }
+                RequestHeaders = { { "X-Icon", IconUrl ?? DefaultIconUrl }, { "X-Title", Title } }
             };
             if (AuthorizationHeader is not null) options.RequestHeaders.Add("Authorization", AuthorizationHeader);
-            if (Url is not null) options.RequestHeaders.Add("X-Tags", TagsHeader);
+            if (TagsHeader is not null) options.RequestHeaders.Add("X-Tags", TagsHeader);
             return options;
         }
     }
