@@ -22,12 +22,6 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
             return this;
         }
 
-        public NtfyNotificationRequestBuilder WithUrl(string? url)
-        {
-            _notificationRequest.Url = url;
-            return this;
-        }
-
         public NtfyNotificationRequestBuilder WithAccessToken(string? accessToken)
         {
             _notificationRequest.AuthorizationHeader =

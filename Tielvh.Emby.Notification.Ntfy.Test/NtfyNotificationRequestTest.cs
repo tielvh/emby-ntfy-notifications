@@ -7,7 +7,7 @@ public class NtfyNotificationRequestTest
     private const string Title = "foo";
     private const string Instance = "https://tielvh.uno";
     private const string Topic = "bar";
-    
+
     [Test]
     public async Task GivenDescriptionNull_WhenConvertingToHttpRequestOptions_ContentIsEmptyString()
     {
@@ -19,7 +19,7 @@ public class NtfyNotificationRequestTest
             .Build();
 
         var options = request.ToHttpRequestOptions();
-        
+
         Assert.That(await options.RequestHttpContent.ReadAsStringAsync(), Is.EqualTo(string.Empty));
     }
 
@@ -35,7 +35,7 @@ public class NtfyNotificationRequestTest
             .Build();
 
         var options = request.ToHttpRequestOptions();
-        
+
         Assert.That(await options.RequestHttpContent.ReadAsStringAsync(), Is.EqualTo(description));
     }
 
@@ -50,7 +50,7 @@ public class NtfyNotificationRequestTest
             .Build();
 
         var options = request.ToHttpRequestOptions();
-        
+
         Assert.That(options.RequestHeaders, Does.Not.ContainKey("Authorization"));
     }
 
@@ -66,39 +66,7 @@ public class NtfyNotificationRequestTest
             .Build();
 
         var options = request.ToHttpRequestOptions();
-        
+
         Assert.That(options.RequestHeaders, Contains.Key("Authorization"));
-    }
-
-    [Test]
-    public void GivenUrlNull_WhenConvertingToHttpRequestOptions_TagsHeaderIsNotAdded()
-    {
-        var request = new NtfyNotificationRequestBuilder()
-            .WithTitle(Title)
-            .WithInstance(Instance)
-            .WithTopic(Topic)
-            .WithUrl(null)
-            .Build();
-
-        var options = request.ToHttpRequestOptions();
-        
-        Assert.That(options.RequestHeaders, Does.Not.ContainKey("X-Tags"));
-    }
-
-    [Test]
-    public void GivenUrl_WhenConvertingToHttpRequestOptions_TagsHeaderIsAdded()
-    {
-        const string url = "https://tielvh.uno";
-        var request = new NtfyNotificationRequestBuilder()
-            .WithTitle(Title)
-            .WithInstance(Instance)
-            .WithTopic(Topic)
-            .WithUrl(url)
-            .Build();
-
-        var options = request.ToHttpRequestOptions();
-        
-        Assert.That(options.RequestHeaders, Contains.Key("X-Tags"));
-        Assert.That(options.RequestHeaders["X-Tags"], Contains.Substring(url));
     }
 }
