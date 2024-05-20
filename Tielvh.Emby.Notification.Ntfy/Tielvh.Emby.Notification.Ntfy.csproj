@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;</TargetFrameworks>
+        <AssemblyVersion>1.1.0.2</AssemblyVersion>
+        <FileVersion>1.1.0.2</FileVersion>
+        <LangVersion>9</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="mediabrowser.server.core" Version="4.8.0.38-beta"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="Configuration/entryeditor.template.html"/>
+        <None Remove="Configuration/entryeditor.js"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Configuration/entryeditor.template.html"/>
+        <EmbeddedResource Include="Configuration/entryeditor.js"/>
+    </ItemGroup>
+
+</Project>
