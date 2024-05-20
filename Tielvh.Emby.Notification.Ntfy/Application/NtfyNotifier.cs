@@ -43,10 +43,9 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
                 .WithCancellationToken(cancellationToken)
                 .Build();
 
-            _logger.Info("Ntfy notification to {url} - {title} - {description}", configResolver.Url, request.Title,
-                request.Description);
+            _logger.Info($"Ntfy notification to {configResolver.Url} - {request.Title} - {request.Description}", null);
             using var httpResponse = await _httpClient.Post(ntfyRequest.ToHttpRequestOptions());
-            _logger.Info("Response status code {statusCode}", httpResponse.StatusCode.ToString());
+            _logger.Info($"Response status code {httpResponse.StatusCode.ToString()}", null);
         }
     }
 }
