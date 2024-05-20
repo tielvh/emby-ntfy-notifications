@@ -9,7 +9,6 @@ define(['pluginManager', 'emby-input'], function (pluginManager) {
         entry.Options.Token = context.querySelector('.txtToken').value;
         entry.Options.Url = context.querySelector('.txtUrl').value;
         entry.Options.Topic = context.querySelector('.txtTopic').value;
-        entry.Options.HostUrl = context.querySelector('.txtHostUrl').value;
     };
 
     EntryEditor.setFormValues = function (context, entry) {
@@ -17,7 +16,6 @@ define(['pluginManager', 'emby-input'], function (pluginManager) {
         context.querySelector('.txtToken').value = entry.Options.Token || '';
         context.querySelector('.txtUrl').value = entry.Options.Url || '';
         context.querySelector('.txtTopic').value = entry.Options.Topic || '';
-        context.querySelector('.txtHostUrl').value = entry.Options.HostUrl || '';
     };
 
     EntryEditor.loadTemplate = function (context) {

@@ -52,12 +52,6 @@ namespace Tielvh.Emby.Notification.Ntfy.Notification
             return this;
         }
 
-        public NtfyNotificationRequestBuilder WithIcon(NotificationImage? icon)
-        {
-            _notificationRequest.IconUrl = icon?.StaticUrl;
-            return this;
-        }
-
         private void Validate()
         {
             if (_instance is null) throw new InvalidOperationException("Instance is not set");

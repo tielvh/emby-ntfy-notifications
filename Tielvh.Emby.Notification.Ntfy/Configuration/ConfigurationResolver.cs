@@ -13,14 +13,11 @@ namespace Tielvh.Emby.Notification.Ntfy.Configuration
 
         public readonly string Topic;
 
-        public readonly string HostUrl;
-
         public ConfigurationResolver(IDictionary<string, string> options)
         {
             _url = options[ConfigurationKeys.Url];
             _accessToken = options[ConfigurationKeys.AccessToken];
             Topic = options[ConfigurationKeys.Topic];
-            HostUrl = options[ConfigurationKeys.HostUrl];
         }
 
         public static class ConfigurationKeys
@@ -28,7 +25,6 @@ namespace Tielvh.Emby.Notification.Ntfy.Configuration
             public const string Url = "Url";
             public const string AccessToken = "Token";
             public const string Topic = "Topic";
-            public const string HostUrl = "HostUrl";
         }
     }
 }

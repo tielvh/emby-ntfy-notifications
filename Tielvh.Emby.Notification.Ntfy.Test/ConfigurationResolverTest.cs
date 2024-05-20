@@ -9,11 +9,9 @@ public class ConfigurationResolverTest
     private const string Url = "https://tielvh.uno";
     private static readonly string Token = RandomStringGenerator.GenerateValue();
     private const string Topic = "notifications";
-    private const string HostUrl = "https://emby.tielvh.uno";
 
     private static readonly IDictionary<string, string> FullOptions = new Dictionary<string, string>
     {
-        { ConfigurationResolver.ConfigurationKeys.HostUrl, HostUrl },
         { ConfigurationResolver.ConfigurationKeys.Topic, Topic },
         { ConfigurationResolver.ConfigurationKeys.Url, Url },
         { ConfigurationResolver.ConfigurationKeys.AccessToken, Token }
@@ -21,7 +19,6 @@ public class ConfigurationResolverTest
 
     private static readonly IDictionary<string, string> MinimalOptions = new Dictionary<string, string>
     {
-        { ConfigurationResolver.ConfigurationKeys.HostUrl, HostUrl },
         { ConfigurationResolver.ConfigurationKeys.Topic, Topic },
         { ConfigurationResolver.ConfigurationKeys.Url, string.Empty },
         { ConfigurationResolver.ConfigurationKeys.AccessToken, string.Empty }

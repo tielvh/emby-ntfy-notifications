@@ -22,8 +22,4 @@
         <EmbeddedResource Include="Configuration/entryeditor.js"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Image\" />
-    </ItemGroup>
-
 </Project>
