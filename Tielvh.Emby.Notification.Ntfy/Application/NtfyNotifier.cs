@@ -37,7 +37,7 @@ namespace Tielvh.Emby.Notification.Ntfy.Application
             var configResolver = new ConfigurationResolver(request.Configuration.Options);
 
             var logo = request.Item?.Id is not null
-                ? new Image(configResolver.HostUrl, ImageType.Logo, request.Item.Id)
+                ? new NotificationImage(configResolver.HostUrl, ImageType.Logo, request.Item.Id)
                 : null;
 
             var ntfyRequest = new NtfyNotificationRequestBuilder()

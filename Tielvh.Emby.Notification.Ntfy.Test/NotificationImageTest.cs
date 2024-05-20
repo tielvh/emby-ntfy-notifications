@@ -3,7 +3,7 @@ using Tielvh.Emby.Notification.Ntfy.Notification;
 
 namespace Tielvh.Emby.Notification.Ntfy.Test;
 
-public class ImageTest
+public class NotificationImageTest
 {
     private const string HostUrl = "https://tielvh.uno";
     private const string ItemId = "1234";
@@ -12,7 +12,7 @@ public class ImageTest
     [Test]
     public void GivenImage_WhenGettingStaticUrl_UrlIsCorrect()
     {
-        var image = new Image(HostUrl, Type, ItemId);
+        var image = new NotificationImage(HostUrl, Type, ItemId);
 
         var url = image.StaticUrl;
 
@@ -26,6 +26,6 @@ public class ImageTest
     {
         const string invalidHostUrl = "bogus";
 
-        Assert.Throws<UriFormatException>(() => _ = new Image(invalidHostUrl, Type, ItemId));
+        Assert.Throws<UriFormatException>(() => _ = new NotificationImage(invalidHostUrl, Type, ItemId));
     }
 }
